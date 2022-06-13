@@ -1,7 +1,12 @@
+import {signInWithGoogle} from "./firebase"
+
 export const App = () => {
+
+  
+
   return (
     <div>
-nejdem spat
+      <button onClick={signInWithGoogle}>sign in</button>
     </div>
   );
 };
