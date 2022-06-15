@@ -30,7 +30,7 @@ export const Calendar = ({ dispatch, month }: { dispatch: React.Dispatch<logIn |
             </div>
 
             <div className="grid grid-cols-7 aspect-square sm">
-              <div className={`col-start-${(days.indexOf(weekDay) + 1).toString()}`}>1</div>
+              <div className={`col-start-3`} style={{gridColumnStart: days.indexOf(weekDay) +1}}>1</div>
               {[...Array(getDaysInMonth(year, month) - 1)].map((item, index) => {
                 return (
                   <div className="" key={index + 2}>
