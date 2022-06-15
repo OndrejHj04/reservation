@@ -6,6 +6,7 @@ export const DaysMobile = ({getDaysInMonth, weekDay, year, month}: {year:number,
     }
   return (
     <>
+    <p className="text-center text-3xl">{year}</p>
       {[...Array(getDaysInMonth(year, month))].map((item, index) => {
         return (
           <div key={index + 1}>
