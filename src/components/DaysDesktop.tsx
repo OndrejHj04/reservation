@@ -1,5 +1,5 @@
 import { days } from "../support/Types";
-export const Days = ({weekDay, getDaysInMonth, year, month}:{weekDay:string, getDaysInMonth: (year: number, month: number)=>number, year:number, month:number }) => {
+export const DaysDesktop = ({weekDay, getDaysInMonth, year, month}:{weekDay:string, getDaysInMonth: (year: number, month: number)=>number, year:number, month:number }) => {
     
     return (
     <>

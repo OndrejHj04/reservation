@@ -1,10 +1,10 @@
 import { Navbar } from "./components/Navbar";
 import { useEffect, useReducer } from "react";
-import { logIn, logOut, initial, state, resize, changeMonth } from "./support/Types";
+import { logIn, logOut, initial, state, resize, changeMonth, setPopup } from "./support/Types";
 import { SignIn } from "./components/SignIn";
 import { Calendar } from "./components/Calendar";
 
-const reducer = (state: { data: state; height: number; month: number }, action: logIn | logOut | resize | changeMonth) => {
+const reducer = (state: { data: state; height: number; month: number, popup: boolean }, action: logIn | logOut | resize | changeMonth | setPopup) => {
   switch (action.type) {
     case "sign":
       localStorage.setItem("user", JSON.stringify(action.data));
@@ -34,6 +34,8 @@ const reducer = (state: { data: state; height: number; month: number }, action: 
         ...state,
         month: val,
       };
+      case "set-popup":
+        return {...state, popup: !state.popup}
   }
 };
 export const App = () => {
