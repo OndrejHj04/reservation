@@ -14,3 +14,4 @@ export type changeMonth = {
   type: "change-month",
   event: React.MouseEvent<HTMLImageElement, MouseEvent>
 }
+export const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
