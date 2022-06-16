@@ -57,8 +57,10 @@ const reducer = (state: { data: state; height: number; month: number; popup: boo
       return state;
     case "request-date":
       const id = nanoid();
+      console.log(Number(state.input.day))
+      const object = {name: Number(state.input.day), month: Number(state.input.month), fromHours: Number(state.input.fromHours), fromMinutes: Number(state.input.fromMinutes), toHours: Number(state.input.toHours), toMinutes: Number(state.input.fromMinutes) }
       setDoc(doc(db, "requests", id), {
-        ...state.input,
+        ...object
       });
       return { ...state, popup: false, input: { day: "", month: "", fromHours: "", fromMinutes: "", toHours: "", toMinutes: "" } };
   }
