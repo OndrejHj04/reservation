@@ -1,4 +1,4 @@
-export const initial = { data: { user: { displayName: "", email: "", photoURL: "" } }, height: window.innerHeight, month: new Date().getMonth()+1, popup: false, input:{day: "", month: "", fromHours: "", fromMinutes: "", toHours: "", toMinutes: ""}};
+export const initial = { data: { user: { displayName: "", email: "", photoURL: "" } }, height: window.innerHeight, month: new Date().getMonth()+1, popup: false, input:{day: "", month: "", fromHours: "", fromMinutes: "", toHours: "", toMinutes: ""}, requests: []};
 export type state =   { user: { displayName: string | null; email: string | null; photoURL: string | null } }
 export type logIn = {
   type: "sign";
@@ -23,5 +23,9 @@ export type input = {
 }
 export type requestDate = {
   type: "request-date"
+}
+export type loadData = {
+  type: "load-data"
+  data: {}[]
 }
 export const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
