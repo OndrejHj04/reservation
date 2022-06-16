@@ -1,11 +1,11 @@
-import { state, logOut, setPopup } from "../support/Types";
+import { state, logOut, setPopup, input } from "../support/Types";
 import { Popup } from "./Popup";
-export const Navbar = ({ state, dispatch }: { state: { data: state; height: number; popup: boolean }; dispatch: React.Dispatch<logOut | setPopup> }) => {
+export const Navbar = ({ state, dispatch }: { state: { data: state; height: number; popup: boolean, input: {day: string, month: string, fromHours: string, fromMinutes: string, toHours: string, toMinutes: string} }; dispatch: React.Dispatch<logOut | setPopup | input> }) => {
   return (
     <>
       <div className="flex text-2xl mb-2" style={{ height: 70 }}>
         {state.popup ? (
-          <Popup height={state.height} dispatch={dispatch} />
+          <Popup input={state.input} dispatch={dispatch} />
         ) : (
           <>
             <div className="flex w-full mx-1 mt-1">
