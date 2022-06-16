@@ -21,4 +21,7 @@ export type input = {
   type: "input",
   event: React.ChangeEvent<HTMLInputElement>
 }
+export type requestDate = {
+  type: "request-date"
+}
 export const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
