@@ -1,5 +1,5 @@
-import { days } from "../support/Types";
-export const DaysMobile = ({getDaysInMonth, weekDay, year, month}: {year:number, month: number, weekDay: string, getDaysInMonth: (year: number, month: number)=>number}) => {
+import { days, state } from "../support/Types";
+export const DaysMobile = ({getDaysInMonth, weekDay, year, state}: {year:number, state: state, weekDay: string, getDaysInMonth: (year: number, month: number)=>number}) => {
     let arr: string[] = [];
     for (let i = 0; i < 6; i++) {
       arr.push(...days);
@@ -7,7 +7,7 @@ export const DaysMobile = ({getDaysInMonth, weekDay, year, month}: {year:number,
   return (
     <>
     <p className="text-center text-3xl">{year}</p>
-      {[...Array(getDaysInMonth(year, month))].map((item, index) => {
+      {[...Array(getDaysInMonth(year, state.month))].map((item, index) => {
         return (
           <div key={index + 1}>
             <div className="flex justify-between">

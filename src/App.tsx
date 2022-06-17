@@ -1,13 +1,13 @@
 import { Navbar } from "./components/Navbar";
 import { useEffect, useReducer } from "react";
-import { logIn, logOut, initial, state, resize, changeMonth, setPopup, input, requestDate, loadData } from "./support/Types";
+import { initial, state, actions } from "./support/Types";
 import { SignIn } from "./components/SignIn";
 import { Calendar } from "./components/Calendar";
 import { doc, setDoc, getFirestore, onSnapshot, collection } from "firebase/firestore";
 import { nanoid } from "nanoid";
 
 const db = getFirestore();
-const reducer = (state: { data: state; height: number; month: number; popup: boolean; input: { day: string; month: string; fromHours: string; fromMinutes: string; toHours: string; toMinutes: string }; requests: {}[] }, action: logIn | logOut | resize | changeMonth | setPopup | input | requestDate | loadData) => {
+const reducer = (state: state, action: actions) => {
   switch (action.type) {
     case "sign":
       localStorage.setItem("user", JSON.stringify(action.data));
@@ -57,7 +57,7 @@ const reducer = (state: { data: state; height: number; month: number; popup: boo
 };
 export const App = () => {
   const [state, dispatch] = useReducer(reducer, initial);
-
+  
   useEffect(() => {
     localStorage.getItem("user")?.length && dispatch({ type: "sign", data: JSON.parse(localStorage.getItem("user")!) });
     window.addEventListener("resize", () => dispatch({ type: "resize" }));
@@ -77,11 +77,11 @@ export const App = () => {
       {state.data.user.photoURL !== "" ? (
         <>
           <Navbar state={state} dispatch={dispatch} />
-          <Calendar dispatch={dispatch} month={state.month} />
+          <Calendar dispatch={dispatch} state={state} />
         </>
       ) : (
         <>
-          <SignIn dispatch={dispatch} height={state.height} />
+          <SignIn dispatch={dispatch} state={state} />
         </>
       )}
     </>

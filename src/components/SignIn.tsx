@@ -1,8 +1,8 @@
 import { auth, provider } from "../support/firebase";
 import { signInWithPopup } from "firebase/auth";
-import {logIn, logOut} from "../support/Types"
+import {actions, state} from "../support/Types"
 
-export const SignIn = ({dispatch, height}:{dispatch: React.Dispatch<logIn | logOut>, height: number}) => {
+export const SignIn = ({dispatch, state}:{state: state, dispatch: React.Dispatch<actions>}) => {
 
   const sign = () => {
     signInWithPopup(auth, provider)
@@ -11,7 +11,7 @@ export const SignIn = ({dispatch, height}:{dispatch: React.Dispatch<logIn | logO
   };
   
   return (
-    <div className="m-auto max-w-3xl h-screen flex p-2" style={{height: height}}>
+    <div className="m-auto max-w-3xl h-screen flex p-2" style={{height: state.height}}>
       <div className="text-center my-auto w-full p-3 shadow-2xl rounded-3xl">
         <h1 className="text-5xl">Reservation system</h1>
         <p className="text-2xl my-3">made by Ondřej Hájek</p>

@@ -1,6 +1,6 @@
-import { logIn, logOut, resize, changeMonth } from "../support/Types";
+import { actions } from "../support/Types";
 
-export const Switch = ({ dispatch, month, date, year }: { dispatch: React.Dispatch<logIn | logOut | resize | changeMonth>; month: number; date: string; year: number }) => {
+export const Switch = ({ dispatch, month, date, year }: { dispatch: React.Dispatch<actions>; month: number; date: string; year: number }) => {
   return (
     <div className="flex max-w-lg mx-auto justify-between uppercase" style={{fontSize: 44}}>
       {month !== 8 && month !== 7 ? (
