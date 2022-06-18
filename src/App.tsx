@@ -38,7 +38,7 @@ const reducer = (state: state, action: actions) => {
         month: val,
       };
     case "set-popup":
-      return { ...state, popup: !state.popup };
+      return { ...state, popup: action.act };
     case "input":
       if (action.event.target.value.length < 3) {
         return { ...state, input: { ...state.input, [action.event.target.name]: action.event.target.value } };
@@ -50,7 +50,7 @@ const reducer = (state: state, action: actions) => {
       setDoc(doc(db, "requests", id), {
         ...object,
       });
-      return { ...state, popup: false, input: { day: "", month: "", fromHours: "", fromMinutes: "", toHours: "", toMinutes: "" } };
+      return { ...state, popup: false, input: initial.input };
     case "load-data":
       return { ...state, requests: action.data };
   }

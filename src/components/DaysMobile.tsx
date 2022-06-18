@@ -11,7 +11,7 @@ export const DaysMobile = ({getDaysInMonth, weekDay, year, state , dispatch}: {y
       {[...Array(getDaysInMonth(year, state.month))].map((item, index) => {
         return (
           <div key={index + 1}>
-            <div className="flex justify-between" onClick={()=>dispatch({type: "set-popup"})}>
+            <div className="flex justify-between" onClick={()=>dispatch({type: "set-popup", act: true})}>
               <p>{index + 1}</p>
               <p>{days.indexOf(weekDay) + index > 6 ? arr[days.indexOf(weekDay) + index] : days[days.indexOf(weekDay) + index]}</p>
             </div>

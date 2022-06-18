@@ -17,6 +17,7 @@ type changeMonth = {
 };
 type setPopup = {
   type: "set-popup";
+  act: boolean
 };
 type input = {
   type: "input";
