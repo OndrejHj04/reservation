@@ -1,5 +1,3 @@
-// import FullCalendar from '@fullcalendar/react'
-// import dayGridPlugin from '@fullcalendar/daygrid'
 import { actions, state } from "../support/Types";
 import { Switch } from "./Switch";
 import { DaysDesktop } from "./DaysDesktop";
@@ -26,7 +24,7 @@ export const Calendar = ({ dispatch, state }: { dispatch: React.Dispatch<actions
           </div>
         </div>
       </div>
-      {state.popup&&<Popup dispatch={dispatch} state={state}/>}
+      {state.popup.value&&<Popup dispatch={dispatch} state={state}/>}
     </>
   );
 };

@@ -38,24 +38,17 @@ const reducer = (state: state, action: actions) => {
         month: val,
       };
     case "set-popup":
-      const event = action.target?.target as Element
-      console.log(event.firstChild?.textContent)
-      console.log(action.month)
-      return { ...state, popup: action.act };
-    case "input":
-      if (action.event.target.value.length < 3) {
-        return { ...state, input: { ...state.input, [action.event.target.name]: action.event.target.value } };
+      const event = action.target.target as Element;
+      if(action.act){
+        return { ...state, popup: { value: action.act, day: event.firstChild?.textContent, month: action.month, fromHours: "", fromMinutes: "", toHours: "", toMinutes: "" } };
       }
-      return state;
-    case "request-date":
-      const id = nanoid();
-      const object = { name: Number(state.input.day), month: Number(state.input.month), fromHours: Number(state.input.fromHours), fromMinutes: Number(state.input.fromMinutes), toHours: Number(state.input.toHours), toMinutes: Number(state.input.fromMinutes) };
-      setDoc(doc(db, "requests", id), {
-        ...object,
-      });
-      return { ...state, popup: false, input: initial.input };
+      return {...state, popup: state.popup}
+    case "input-popup":
+      return {...state, popup: {...state.popup, [action.event.target.name]: action.event.target.value}}
     case "load-data":
       return { ...state, requests: action.data };
+    default:
+      return {state};
   }
 };
 export const App = () => {
@@ -71,7 +64,6 @@ export const App = () => {
         arr.push(doc.data());
       });
 
-      dispatch({ type: "load-data", data: arr });
     });
   }, []);
 
