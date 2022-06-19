@@ -13,7 +13,7 @@ export const Calendar = ({ dispatch, state }: { dispatch: React.Dispatch<actions
 
   return (
     <>
-      <Switch dispatch={dispatch} month={state.month} date={date} year={year}/>
+      <Switch dispatch={dispatch} month={state.month} date={date} year={year} />
       <div className="max-w-2xl mx-auto p-1">
         <div className=" p-2 shadow-2xl border rounded-3xl">
           <div className="hidden sm:block">
@@ -24,7 +24,7 @@ export const Calendar = ({ dispatch, state }: { dispatch: React.Dispatch<actions
           </div>
         </div>
       </div>
-      {state.popup.value&&<Popup dispatch={dispatch} state={state} />}
+      {state.popup.value&&<Popup dispatch={dispatch} state={state}/>}
     </>
   );
 };

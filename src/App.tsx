@@ -59,10 +59,10 @@ const reducer = (state: state, action: actions) => {
     case "modify-time":
       return { ...state, popup: { ...state.popup, toHours: (Number(state.popup.fromHours) + 1).toString() } };
     case "make-request":
-      const id = nanoid()
+      const id = nanoid();
       setDoc(doc(db, "requests", id), {
-        ...state.popup
-      })
+        ...state.popup,
+      });
       return { ...state, popup: initial.popup };
     case "load-requests":
       return { ...state, requests: action.data };
@@ -76,14 +76,15 @@ export const App = () => {
     window.addEventListener("resize", () => dispatch({ type: "resize" }));
 
     onSnapshot(collection(db, "requests"), (snapshot) => {
-      let arr: {}[] = [];
+      let arr: {day: string, fromHous: string, fromMinutes: string, month: string, toHours: string, toMinutes: string, value: boolean}[] = [];
       snapshot.docs.forEach((doc) => {
-        arr.push(doc.data());
+        const data = doc.data() as {day: string, fromHous: string, fromMinutes: string, month: string, toHours: string, toMinutes: string, value: boolean}
+        arr.push(data);
       });
       dispatch({ type: "load-requests", data: arr });
     });
   }, []);
-
+  
   useEffect(() => {
     if (Number(state.popup.fromHours) > Number(state.popup.toHours) && state.popup.toHours.length && state.popup.toHours.length === state.popup.fromHours.length) {
       console.log(state.popup);
@@ -91,7 +92,7 @@ export const App = () => {
       dispatch({ type: "modify-time" });
     }
   }, [state.popup]);
-  console.log(state.requests)
+
   return (
     <>
       {state.data.user.photoURL !== "" ? (

@@ -22,5 +22,8 @@
   },
   "include": [
     "src"
-  ]
+  ],
+  "plugins": [{
+    "name": "typescript-snapshots-plugin",
+}]
 }
