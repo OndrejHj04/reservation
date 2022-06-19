@@ -27,7 +27,10 @@ type loadData = {
 };
 type inputPopup = {
   type: "input-popup",
-  event: React.ChangeEvent<HTMLInputElement>
+  event: React.ChangeEvent<HTMLInputElement>,
 }
-export type actions = logIn | logOut | resize | changeMonth | setPopup  | loadData | inputPopup;
+type modifyTime = {
+  type: "modify-time"
+}
+export type actions = logIn | logOut | resize | changeMonth | setPopup  | loadData | inputPopup | modifyTime;
 export const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];

@@ -1,6 +1,8 @@
+import { useEffect, useRef } from "react";
 import { actions, state } from "../support/Types";
 
-export const Popup = ({ state, dispatch }: { state: state; dispatch: React.Dispatch<actions> }) => {
+export const Popup = ({ state, dispatch }: { state: state; dispatch: React.Dispatch<actions>  }) => {
+
 
   return (
     <>
@@ -16,19 +18,19 @@ export const Popup = ({ state, dispatch }: { state: state; dispatch: React.Dispa
 
           <div className="flex">
             <label htmlFor="">month</label>
-            <input type="text" readOnly={true} className="text-center outline-none border-b-2 border-black w-32 mx-1" value={state.popup.month}/>
+            <input type="text" readOnly={true} className="text-center outline-none border-b-2 border-black w-28 mx-1" value={state.popup.month}/>
           </div>
 
           <div className="flex">
             <label htmlFor="">from</label>
-            <input type="text" name="fromHours" className="text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.fromHours} onChange={(e)=>dispatch({type: "input-popup", event: e})}/>:
-            <input type="text" name="fromMinutes" className="text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.fromMinutes} onChange={(e)=>dispatch({type: "input-popup", event: e})}/>
+            <input type="number" name="fromHours" className="text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.fromHours} onChange={(e)=>dispatch({type: "input-popup", event: e})}/>:
+            <input type="number" name="fromMinutes" className="text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.fromMinutes} onChange={(e)=>dispatch({type: "input-popup", event: e})}/>
           </div>
 
           <div className="flex">
             <label htmlFor="">to</label>
-            <input type="text" name="toHours" className="text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.toHours} onChange={(e)=>dispatch({type: "input-popup", event: e})}/>:
-            <input type="text" name="toMinutes" className="text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.toMinutes} onChange={(e)=>dispatch({type: "input-popup", event: e})}/>
+            <input type="number" name="toHours" className="text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.toHours} onChange={(e)=>dispatch({type: "input-popup", event: e})}/>:
+            <input type="number" name="toMinutes" className="text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.toMinutes} onChange={(e)=>dispatch({type: "input-popup", event: e})}/>
           </div>
 
           <div className="flex ml-auto">
