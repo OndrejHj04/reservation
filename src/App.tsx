@@ -6,7 +6,7 @@ import { Calendar } from "./components/Calendar";
 import { doc, setDoc, getFirestore, onSnapshot, collection } from "firebase/firestore";
 import { nanoid } from "nanoid";
 
-const validateTime = (value: string, name: string, state:state) => {
+const validateTime = (value: string, name: string, state: state) => {
   if (name.includes("Hours") && Number(value) > 21) {
     return "20";
   } else if (name.includes("Minutes") && Number(value) > 59) {
@@ -56,10 +56,16 @@ const reducer = (state: state, action: actions) => {
         return { ...state, popup: { ...state.popup, [action.event.target.name]: validateTime(action.event.target.value, action.event.target.name, state) } };
       }
       return state;
-    case "load-data":
-      return { ...state, requests: action.data };
     case "modify-time":
-      return {...state, popup: {...state.popup, toHours: (Number(state.popup.fromHours) + 1).toString()}}
+      return { ...state, popup: { ...state.popup, toHours: (Number(state.popup.fromHours) + 1).toString() } };
+    case "make-request":
+      const id = nanoid()
+      setDoc(doc(db, "requests", id), {
+        ...state.popup
+      })
+      return { ...state, popup: initial.popup };
+    case "load-requests":
+      return { ...state, requests: action.data };
   }
 };
 export const App = () => {
@@ -74,16 +80,18 @@ export const App = () => {
       snapshot.docs.forEach((doc) => {
         arr.push(doc.data());
       });
+      dispatch({ type: "load-requests", data: arr });
     });
   }, []);
 
-  useEffect(()=>{
-    if(Number(state.popup.fromHours) > Number(state.popup.toHours)&&state.popup.toHours.length&&state.popup.toHours.length === state.popup.fromHours.length){
-    console.log(state.popup)
-      
-      dispatch({type: "modify-time"})
+  useEffect(() => {
+    if (Number(state.popup.fromHours) > Number(state.popup.toHours) && state.popup.toHours.length && state.popup.toHours.length === state.popup.fromHours.length) {
+      console.log(state.popup);
+
+      dispatch({ type: "modify-time" });
     }
-  },[state.popup])
+  }, [state.popup]);
+  console.log(state.requests)
   return (
     <>
       {state.data.user.photoURL !== "" ? (

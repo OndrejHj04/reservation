@@ -34,7 +34,7 @@ export const Popup = ({ state, dispatch }: { state: state; dispatch: React.Dispa
           </div>
 
           <div className="flex ml-auto">
-            <div className="cursor-pointer text-center mx-2">request!</div>
+            <div className="cursor-pointer text-center mx-2" onClick={()=>dispatch({type: "make-request"})}>request!</div>
             <div className="cursor-pointer text-center mx-2" onClick={(e) => dispatch({ type: "set-popup", act: false, target: e, month: "" })}>
               cancel!
             </div>
