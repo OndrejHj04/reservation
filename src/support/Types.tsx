@@ -21,13 +21,6 @@ type setPopup = {
   target: React.MouseEvent<HTMLDivElement, MouseEvent>
   month: string 
 };
-type input = {
-  type: "input";
-  event: React.ChangeEvent<HTMLInputElement>;
-};
-type requestDate = {
-  type: "request-date";
-};
 type loadData = {
   type: "load-data";
   data: {}[];
@@ -36,5 +29,5 @@ type inputPopup = {
   type: "input-popup",
   event: React.ChangeEvent<HTMLInputElement>
 }
-export type actions = logIn | logOut | resize | changeMonth | setPopup | input | requestDate | loadData | inputPopup;
+export type actions = logIn | logOut | resize | changeMonth | setPopup  | loadData | inputPopup;
 export const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];

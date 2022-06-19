@@ -40,15 +40,14 @@ const reducer = (state: state, action: actions) => {
     case "set-popup":
       const event = action.target.target as Element;
       if(action.act){
-        return { ...state, popup: { value: action.act, day: event.firstChild?.textContent, month: action.month, fromHours: "", fromMinutes: "", toHours: "", toMinutes: "" } };
+        return { ...state, popup: {...state.popup, value: action.act, day: event.firstChild?.textContent, month: action.month, fromHours: "", fromMinutes: "", toHours: "", toMinutes: "" } };
       }
       return {...state, popup: state.popup}
     case "input-popup":
       return {...state, popup: {...state.popup, [action.event.target.name]: action.event.target.value}}
     case "load-data":
       return { ...state, requests: action.data };
-    default:
-      return {state};
+
   }
 };
 export const App = () => {
