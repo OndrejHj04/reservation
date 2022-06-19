@@ -1,10 +1,44 @@
-import { state } from "../support/Types"
+import { deleteDoc, doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { state } from "../support/Types";
 
-export const Administration = ({state}:{state:state}) => {
+export const Administration = ({ state }: { state: state }) => {
+  const db = getFirestore();
+  const acceptTerm = (id: string) => {
+    const docRef = doc(db, "requests", id);
+    const docSnap = getDoc(docRef);
 
-    return (
-        <div className="border-2 p-2">
+    docSnap.then(res=>{
+        setDoc(doc(db, "accepted", id),{
+            ...res.data()
+        })
+        deleteDoc(docRef)
+    })
+  };
+  return (
+    <>
+      <div className="p-2 text-2xl overflow-x-scroll">
+        <h1>Administration</h1>
+        <hr />
 
+        <div className="flex">
+          {state.requests.map((item) => {
+            return (
+              <div className="bg-orange-500 p-2 rounded-2xl m-1 flex w-fit" key={item.id}>
+                <h1>{item.day}</h1>.&nbsp;
+                <h1>{item.month}</h1>&nbsp;
+                <h1>{item.fromHours}</h1>:<h1>{item.fromMinutes}</h1>-<h1>{item.toHours}</h1>:<h1>{item.toMinutes}</h1>&nbsp;
+                <div className="w-8 h-8" onClick={() => deleteDoc(doc(db, "requests", item.id))}>
+                  <img src={require("../images/cancel.png")} alt="" className="w-full h-full" />
+                </div>
+                &nbsp;
+                <div className="w-8 h-8" onClick={() => acceptTerm(item.id)}>
+                  <img src={require("../images/accept.png")} alt="" className="w-full h-full" />
+                </div>
+              </div>
+            );
+          })}
         </div>
-    )
-}
+      </div>
+    </>
+  );
+};

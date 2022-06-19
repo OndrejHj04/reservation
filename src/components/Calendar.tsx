@@ -3,6 +3,7 @@ import { Switch } from "./Switch";
 import { DaysDesktop } from "./DaysDesktop";
 import { DaysMobile } from "./DaysMobile";
 import { Popup } from "./Popup";
+import { Administration } from "./Administration";
 export const Calendar = ({ dispatch, state }: { dispatch: React.Dispatch<actions>; state: state }) => {
   const date = new Date(state.month.toString()).toLocaleString("cs-CZ", { month: "long" });
   const year = new Date().getMonth() > 7 ? (state.month > 8 ? new Date().getFullYear() : new Date((new Date().getFullYear() + 1).toString()).getFullYear()) : state.month > 8 ? new Date((new Date().getFullYear() - 1).toString()).getFullYear() : new Date().getFullYear();
@@ -17,14 +18,14 @@ export const Calendar = ({ dispatch, state }: { dispatch: React.Dispatch<actions
       <div className="max-w-2xl mx-auto p-1">
         <div className=" p-2 shadow-2xl border rounded-3xl">
           <div className="hidden sm:block">
-            <DaysDesktop weekDay={weekDay} getDaysInMonth={getDaysInMonth} date={date} year={year} state={state} dispatch={dispatch}/>
+            <DaysDesktop weekDay={weekDay} getDaysInMonth={getDaysInMonth} date={date} year={year} state={state} dispatch={dispatch} />
           </div>
           <div className="sm:hidden block">
-            <DaysMobile weekDay={weekDay} getDaysInMonth={getDaysInMonth} date={date} year={year} state={state} dispatch={dispatch}/>
+            <DaysMobile weekDay={weekDay} getDaysInMonth={getDaysInMonth} date={date} year={year} state={state} dispatch={dispatch} />
           </div>
         </div>
       </div>
-      {state.popup.value&&<Popup dispatch={dispatch} state={state}/>}
+      {state.popup.value ? <Popup dispatch={dispatch} state={state} /> : <Administration state={state} />}
     </>
   );
 };
