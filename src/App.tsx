@@ -38,6 +38,9 @@ const reducer = (state: state, action: actions) => {
         month: val,
       };
     case "set-popup":
+      const event = action.target?.target as Element
+      console.log(event.firstChild?.textContent)
+      console.log(action.month)
       return { ...state, popup: action.act };
     case "input":
       if (action.event.target.value.length < 3) {

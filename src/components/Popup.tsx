@@ -41,9 +41,3 @@ export const Popup = ({ state, dispatch }: { state: state; dispatch: React.Dispa
     </>
   );
 };
-{
-  /* <div className="flex flex-col m-auto w-full">
-            <div className="cursor-pointer text-center w-min mx-auto">request!</div>
-            <div className="cursor-pointer text-center w-min mx-auto" onClick={()=>dispatch({type: "set-popup", act: false})}>cancel!</div>
-          </div> */
-}

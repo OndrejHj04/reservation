@@ -19,10 +19,10 @@ export const Calendar = ({ dispatch, state }: { dispatch: React.Dispatch<actions
       <div className="max-w-2xl mx-auto p-1">
         <div className=" p-2 shadow-2xl border rounded-3xl">
           <div className="hidden sm:block">
-            <DaysDesktop weekDay={weekDay} getDaysInMonth={getDaysInMonth} year={year} state={state} dispatch={dispatch}/>
+            <DaysDesktop weekDay={weekDay} getDaysInMonth={getDaysInMonth} date={date} year={year} state={state} dispatch={dispatch}/>
           </div>
           <div className="sm:hidden block">
-            <DaysMobile weekDay={weekDay} getDaysInMonth={getDaysInMonth} year={year} state={state} dispatch={dispatch}/>
+            <DaysMobile weekDay={weekDay} getDaysInMonth={getDaysInMonth} date={date} year={year} state={state} dispatch={dispatch}/>
           </div>
         </div>
       </div>

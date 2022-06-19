@@ -18,6 +18,8 @@ type changeMonth = {
 type setPopup = {
   type: "set-popup";
   act: boolean
+  target?: React.MouseEvent<HTMLDivElement, MouseEvent>
+  month?: string 
 };
 type input = {
   type: "input";
