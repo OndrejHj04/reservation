@@ -11,7 +11,7 @@ export const Calendar = ({ dispatch, state }: { dispatch: React.Dispatch<actions
   function getDaysInMonth(year: number, month: number) {
     return new Date(year, month, 0).getDate();
   }
-
+  
   return (
     <>
       <Switch dispatch={dispatch} month={state.month} date={date} year={year} />

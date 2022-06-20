@@ -21,7 +21,7 @@ export const Administration = ({ state }: { state: state }) => {
         <hr />
 
         <div className="flex">
-          {state.requests.map((item) => {
+          {state.requests.length?state.requests.map((item) => {
             return (
               <div className="bg-orange-500 p-2 rounded-2xl m-1 flex w-fit" key={item.id}>
                 <h1>{item.day}</h1>.&nbsp;
@@ -36,7 +36,7 @@ export const Administration = ({ state }: { state: state }) => {
                 </div>
               </div>
             );
-          })}
+          }): <h1>no request left</h1>}
         </div>
       </div>
     </>

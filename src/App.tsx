@@ -3,7 +3,7 @@ import { createContext, useEffect, useReducer, useRef } from "react";
 import { initial, state, actions } from "./support/Types";
 import { SignIn } from "./components/SignIn";
 import { Calendar } from "./components/Calendar";
-import { doc, setDoc, getFirestore, onSnapshot, collection } from "firebase/firestore";
+import { doc, setDoc, getFirestore, onSnapshot, collection, snapshotEqual } from "firebase/firestore";
 import { nanoid } from "nanoid";
 
 const validateTime = (value: string, name: string, state: state) => {
@@ -46,7 +46,7 @@ const reducer = (state: state, action: actions) => {
         month: val,
       };
     case "set-popup":
-      const event = action.target.target as Element;
+      const event = action.target as Element;
       if (action.act) {
         return { ...state, popup: { ...state.popup, value: action.act, day: event.firstChild?.textContent, month: action.month, fromHours: "", fromMinutes: "", toHours: "", toMinutes: "" } };
       }
@@ -67,6 +67,8 @@ const reducer = (state: state, action: actions) => {
       return { ...state, popup: initial.popup };
     case "load-requests":
       return { ...state, requests: action.data };
+    case "load-accepts":
+      return {...state, accepts: action.data}
   }
 };
 export const App = () => {
@@ -84,6 +86,14 @@ export const App = () => {
       });
       dispatch({ type: "load-requests", data: arr });
     });
+    onSnapshot(collection(db, "accepted"), snapshot=>{
+      let arr: {day: string; fromHours: string; fromMinutes: string; month: string; toHours: string; toMinutes: string; value: boolean; id: string}[] = []
+      snapshot.docs.forEach(doc=>{
+        const data = doc.data() as {day: string; fromHours: string; fromMinutes: string; month: string; toHours: string; toMinutes: string; value: boolean; id: string}
+        arr.push(data)
+      })
+      dispatch({type: "load-accepts", data: arr})
+    })
   }, []);
 
   useEffect(() => {
@@ -91,6 +101,7 @@ export const App = () => {
       dispatch({ type: "modify-time" });
     }
   }, [state.popup]);
+  
   return (
     <>
       {state.data.user.photoURL !== "" ? (
