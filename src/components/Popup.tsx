@@ -23,23 +23,24 @@ export const Popup = ({ state, dispatch }: { state: state; dispatch: React.Dispa
 
           <div className="flex">
             <label htmlFor="">from</label>
-            <input type="number" name="fromHours" className="text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.fromHours} onChange={(e)=>dispatch({type: "input-popup", event: e})}/>:
-            <input type="number" name="fromMinutes" className="text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.fromMinutes} onChange={(e)=>dispatch({type: "input-popup", event: e})}/>
+            <input type="number" name="fromHours" id="1" className="text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.fromHours} onChange={(e)=>dispatch({type: "input-popup", event: e})}/>:
+            <input type="number" name="fromMinutes" id="2" className="text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.fromMinutes} onChange={(e)=>dispatch({type: "input-popup", event: e})}/>
           </div>
 
           <div className="flex">
             <label htmlFor="">to</label>
-            <input type="number" name="toHours" className="text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.toHours} onChange={(e)=>dispatch({type: "input-popup", event: e})}/>:
-            <input type="number" name="toMinutes" className="text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.toMinutes} onChange={(e)=>dispatch({type: "input-popup", event: e})}/>
+            <input type="number" name="toHours" id="3" className="text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.toHours} onChange={(e)=>dispatch({type: "input-popup", event: e})}/>:
+            <input type="number" name="toMinutes" id="4" className="text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.toMinutes} onChange={(e)=>dispatch({type: "input-popup", event: e})}/>
           </div>
 
           <div className="flex ml-auto">
             <div className="cursor-pointer text-center mx-2" onClick={()=>dispatch({type: "make-request"})}>request!</div>
-            <div className="cursor-pointer text-center mx-2" onClick={(e) => dispatch({ type: "set-popup", act: false, target: e, month: "" })}>
+            <div className="cursor-pointer text-center mx-2" onClick={(e) => dispatch({ type: "set-popup", act: false, target: e.currentTarget, month: "" })}>
               cancel!
             </div>
           </div>
         </div>
+        {state.error}
       </div>
     </>
   );

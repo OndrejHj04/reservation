@@ -30,7 +30,6 @@ export const DaysDesktop = ({ weekDay, getDaysInMonth, year, state, dispatch, da
               <p>{index + 2}</p>
               {state.accepts.map((item) => {
                 if (item.month === date && Number(item.day) === index + 2) {
-                  console.log(item.fromHours)
                   return (
                     <div key={nanoid()} className="flex">
                       <p>{item.fromHours}</p>:

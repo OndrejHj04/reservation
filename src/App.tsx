@@ -9,7 +9,9 @@ import { nanoid } from "nanoid";
 const validateTime = (value: string, name: string, state: state) => {
   if (name.includes("Hours") && Number(value) > 21) {
     return "20";
-  } else if (name.includes("Minutes") && Number(value) > 59) {
+  }
+
+  if (name.includes("Minutes") && Number(value) > 59) {
     return "00";
   }
   return value;
@@ -47,10 +49,9 @@ const reducer = (state: state, action: actions) => {
       };
     case "set-popup":
       const event = action.target as Element;
-      if (action.act) {
-        return { ...state, popup: { ...state.popup, value: action.act, day: event.firstChild?.textContent, month: action.month, fromHours: "", fromMinutes: "", toHours: "", toMinutes: "" } };
-      }
-      return { ...state, popup: initial.popup };
+
+      return { ...state, popup: { ...state.popup, value: action.act, day: event.firstChild?.textContent, month: action.month, fromHours: "", fromMinutes: "", toHours: "", toMinutes: "" }, error: "" };
+
     case "input-popup":
       if (action.event.target.value.length < 3) {
         return { ...state, popup: { ...state.popup, [action.event.target.name]: validateTime(action.event.target.value, action.event.target.name, state) } };
@@ -60,20 +61,32 @@ const reducer = (state: state, action: actions) => {
       return { ...state, popup: { ...state.popup, toHours: (Number(state.popup.fromHours) + 1).toString() } };
     case "make-request":
       const id = nanoid();
-      setDoc(doc(db, "requests", id), {
-        ...state.popup,
-        id: id,
-      });
-      return { ...state, popup: initial.popup };
+
+      if (state.popup.fromHours.length && state.popup.fromMinutes.length && state.popup.toHours.length && state.popup.toMinutes.length) {
+        setDoc(doc(db, "requests", id), {
+          ...state.popup,
+          fromMinutes: state.popup.fromMinutes.length === 1 ? state.popup.fromMinutes + 0 : state.popup.fromMinutes,
+          toMinutes: state.popup.fromMinutes.length === 1 ? state.popup.toMinutes + 0 : state.popup.toMinutes,
+          id: id,
+        });
+        return { ...state, popup: initial.popup, error: "" };
+      } else {
+        return { ...state, error: "Invalid data!" };
+      }
     case "load-requests":
       return { ...state, requests: action.data };
     case "load-accepts":
-      return {...state, accepts: action.data}
+      return { ...state, accepts: action.data };
+    case "focus":
+      if (action.key.includes("Right") || action.key.includes("Left")) {
+        return { ...state, focus: action.key.includes("Right")?state.focus+1:state.focus-1 };
+      }
+      return state;
   }
 };
 export const App = () => {
   const [state, dispatch] = useReducer(reducer, initial);
-
+  console.log(state.focus)
   useEffect(() => {
     localStorage.getItem("user")?.length && dispatch({ type: "sign", data: JSON.parse(localStorage.getItem("user")!) });
     window.addEventListener("resize", () => dispatch({ type: "resize" }));
@@ -86,14 +99,15 @@ export const App = () => {
       });
       dispatch({ type: "load-requests", data: arr });
     });
-    onSnapshot(collection(db, "accepted"), snapshot=>{
-      let arr: {day: string; fromHours: string; fromMinutes: string; month: string; toHours: string; toMinutes: string; value: boolean; id: string}[] = []
-      snapshot.docs.forEach(doc=>{
-        const data = doc.data() as {day: string; fromHours: string; fromMinutes: string; month: string; toHours: string; toMinutes: string; value: boolean; id: string}
-        arr.push(data)
-      })
-      dispatch({type: "load-accepts", data: arr})
-    })
+    onSnapshot(collection(db, "accepted"), (snapshot) => {
+      let arr: { day: string; fromHours: string; fromMinutes: string; month: string; toHours: string; toMinutes: string; value: boolean; id: string }[] = [];
+      snapshot.docs.forEach((doc) => {
+        const data = doc.data() as { day: string; fromHours: string; fromMinutes: string; month: string; toHours: string; toMinutes: string; value: boolean; id: string };
+        arr.push(data);
+      });
+      dispatch({ type: "load-accepts", data: arr });
+    });
+    document.addEventListener("keydown", (e) => e.key.includes("Arrow") && dispatch({ type: "focus", key: e.key }));
   }, []);
 
   useEffect(() => {
@@ -101,7 +115,7 @@ export const App = () => {
       dispatch({ type: "modify-time" });
     }
   }, [state.popup]);
-  
+
   return (
     <>
       {state.data.user.photoURL !== "" ? (
