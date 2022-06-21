@@ -79,22 +79,24 @@ const reducer = (state: state, action: actions) => {
       return { ...state, accepts: action.data };
     case "focus":
       if (state.popup.value && (action.key.includes("Right") || action.key.includes("Left"))) {
-        
         const countFocus = () => {
-          if(action.key.includes("Right")&&state.focus < 4){
-            return state.focus+1
-          }else if(action.key.includes("Left")&&state.focus>1){
-            return state.focus-1
+          if (action.key.includes("Right") && state.focus < 4) {
+            return state.focus + 1;
+          } else if (action.key.includes("Left") && state.focus > 1) {
+            return state.focus - 1;
           }
-          return state.focus
+          return state.focus;
         };
         return { ...state, focus: countFocus() };
       }
       return state;
+      case "direct-focus":
+        return {...state, focus: action.id}
   }
 };
 export const App = () => {
   const [state, dispatch] = useReducer(reducer, initial);
+  console.log(state.focus)
   useEffect(() => {
     localStorage.getItem("user")?.length && dispatch({ type: "sign", data: JSON.parse(localStorage.getItem("user")!) });
     window.addEventListener("resize", () => dispatch({ type: "resize" }));
@@ -124,18 +126,18 @@ export const App = () => {
     }
   }, [state.popup]);
 
-  return (
-    <>
-      {state.data.user.photoURL !== "" ? (
-        <>
-          <Navbar state={state} dispatch={dispatch} />
-          <Calendar dispatch={dispatch} state={state} />
-        </>
-      ) : (
-        <>
-          <SignIn dispatch={dispatch} state={state} />
-        </>
-      )}
-    </>
-  );
+    return (
+      <>
+        {state.data.user.photoURL !== "" ? (
+          <>
+            <Navbar state={state} dispatch={dispatch} />
+            <Calendar dispatch={dispatch} state={state} />
+          </>
+        ) : (
+          <>
+            <SignIn dispatch={dispatch} state={state} />
+          </>
+        )}
+      </>
+    );
 };

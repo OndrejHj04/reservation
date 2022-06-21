@@ -5,7 +5,7 @@ export const DaysMobile = ({ getDaysInMonth, weekDay, year, state, dispatch, dat
   for (let i = 0; i < 6; i++) {
     arr.push(...days);
   }
-  console.log(date);
+
   return (
     <>
       <p className="text-center text-3xl">{year}</p>
@@ -18,7 +18,7 @@ export const DaysMobile = ({ getDaysInMonth, weekDay, year, state, dispatch, dat
             </div>
             {state.accepts.map((item, i) => {
               if (index + 1 === Number(item.day) && item.month === date) {
-                return <p>{item.fromHours}:{item.fromMinutes}-{item.toHours}:{item.toMinutes}</p>;
+                return <p key={item.id}>{item.fromHours}:{item.fromMinutes}-{item.toHours}:{item.toMinutes}</p>;
               }
             })}
             <hr />

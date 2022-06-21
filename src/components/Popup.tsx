@@ -3,7 +3,13 @@ import { actions, state } from "../support/Types";
 
 export const Popup = ({ state, dispatch }: { state: state; dispatch: React.Dispatch<actions> }) => {
   useEffect(() => {
-    Array.prototype.slice.call(document.getElementsByClassName("input")).map((item, index) => {
+    const elements = Array.prototype.slice.call(document.getElementsByClassName("input"))
+
+    elements.map((item, index) => {
+
+      item.onclick = () => {
+        dispatch({type: "direct-focus", id: item.id})
+      }
       index + 1 === state.focus && item.focus();
     });
   }, [state.focus]);

@@ -43,5 +43,9 @@ type focus = {
   type: "focus"
   key: string
 }
-export type actions = logIn | logOut | resize | changeMonth | setPopup   | inputPopup | modifyTime | makeRequest | loadRequests | loadAccepts | focus;
+type directFocus = {
+  type: "direct-focus",
+  id: number
+}
+export type actions = logIn | logOut | resize | changeMonth | setPopup   | inputPopup | modifyTime | makeRequest | loadRequests | loadAccepts | focus | directFocus;
 export const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
