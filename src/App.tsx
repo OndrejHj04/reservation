@@ -17,6 +17,7 @@ const validateTime = (value: string, name: string, state: state) => {
   return value;
 };
 const db = getFirestore();
+
 const reducer = (state: state, action: actions) => {
   switch (action.type) {
     case "sign":
@@ -49,8 +50,7 @@ const reducer = (state: state, action: actions) => {
       };
     case "set-popup":
       const event = action.target as Element;
-
-      return { ...state, popup: { ...state.popup, value: action.act, day: event.firstChild?.textContent, month: action.month, fromHours: "", fromMinutes: "", toHours: "", toMinutes: "" }, error: "" };
+      return { ...state, focus: 1, popup: { ...state.popup, value: action.act, day: event.firstChild?.textContent, month: action.month, fromHours: "", fromMinutes: "", toHours: "", toMinutes: "" }, error: "" };
 
     case "input-popup":
       if (action.event.target.value.length < 3) {
@@ -78,15 +78,23 @@ const reducer = (state: state, action: actions) => {
     case "load-accepts":
       return { ...state, accepts: action.data };
     case "focus":
-      if (action.key.includes("Right") || action.key.includes("Left")) {
-        return { ...state, focus: action.key.includes("Right")?state.focus+1:state.focus-1 };
+      if (state.popup.value && (action.key.includes("Right") || action.key.includes("Left"))) {
+        
+        const countFocus = () => {
+          if(action.key.includes("Right")&&state.focus < 4){
+            return state.focus+1
+          }else if(action.key.includes("Left")&&state.focus>1){
+            return state.focus-1
+          }
+          return state.focus
+        };
+        return { ...state, focus: countFocus() };
       }
       return state;
   }
 };
 export const App = () => {
   const [state, dispatch] = useReducer(reducer, initial);
-  console.log(state.focus)
   useEffect(() => {
     localStorage.getItem("user")?.length && dispatch({ type: "sign", data: JSON.parse(localStorage.getItem("user")!) });
     window.addEventListener("resize", () => dispatch({ type: "resize" }));
