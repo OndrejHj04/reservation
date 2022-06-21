@@ -25,7 +25,7 @@ export const Calendar = ({ dispatch, state }: { dispatch: React.Dispatch<actions
           </div>
         </div>
       </div>
-      {state.popup.value ? <Popup dispatch={dispatch} state={state} /> : <Administration state={state} />}
+      {state.popup.value ? <Popup dispatch={dispatch} state={state} date={date}/> : <Administration state={state} />}
     </>
   );
 };

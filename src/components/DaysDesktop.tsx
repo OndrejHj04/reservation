@@ -31,12 +31,10 @@ export const DaysDesktop = ({ weekDay, getDaysInMonth, year, state, dispatch, da
               {state.accepts.map((item) => {
                 if (item.month === date && Number(item.day) === index + 2) {
                   return (
-                    <div key={nanoid()} className="flex">
-                      <p>{item.fromHours}</p>:
-                      <p>{item.fromMinutes}</p>
-                      -
-                      <p>{item.toHours}</p>:
-                      <p>{item.toMinutes}</p>
+                    <div key={nanoid()} className="flex flex-col rounded-xl">
+                      <div className="flex">
+                        <p>{item.fromHours}</p>:<p>{item.fromMinutes}</p>-<p>{item.toHours}</p>:<p>{item.toMinutes}</p>
+                      </div>
                     </div>
                   );
                 }
