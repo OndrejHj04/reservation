@@ -49,8 +49,7 @@ const reducer = (state: state, action: actions) => {
         month: val,
       };
     case "set-popup":
-      const event = action.target as Element;
-      return { ...state, focus: 1, popup: { ...state.popup, value: action.act, day: event.firstChild?.textContent, month: action.month, fromHours: "", fromMinutes: "", toHours: "", toMinutes: "" }, error: "" };
+      return { ...state, focus: 1, popup: { ...state.popup, value: action.act, day: action.day, month: action.month, fromHours: "", fromMinutes: "", toHours: "", toMinutes: "" }, error: "" };
 
     case "input-popup":
       if (action.event.target.value.length < 3) {
@@ -127,10 +126,9 @@ export const App = () => {
       dispatch({ type: "modify-time" });
     }
   }, [state.popup]);
-
     return (
       <>
-        {state.data.user.photoURL !== "" ? (
+        {Object.keys(state.data).length > 1 ? (
           <>
             <Navbar state={state} dispatch={dispatch} />
             <Calendar dispatch={dispatch} state={state} />

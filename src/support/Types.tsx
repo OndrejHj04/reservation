@@ -1,5 +1,5 @@
-export const initial = { data: { user: { displayName: "", email: "", photoURL: "" } }, height: window.innerHeight, month: new Date().getMonth() + 1, popup: {value: false, day: "", month: "", fromHours: "", fromMinutes: "", toHours: "", toMinutes: ""},  requests: [], accepts: [], error: "", focus: 1};
-export type state = { data: { user: { displayName: string | null; email: string | null; photoURL: string | null } }; height: number; month: number; popup: {value: boolean, day: string | null | undefined, month: string, fromHours: string, fromMinutes: string, toHours: string, toMinutes: string}, requests: {day: string, fromHours: string, fromMinutes: string, month: string, toHours: string, toMinutes: string, value: boolean, id: string, user: string, photo: string}[], accepts: {day: string, fromHours: string, fromMinutes: string, month: string, toHours: string, toMinutes: string, value: boolean, id: string, user: string, photo: string}[], error: string, focus: number};
+export const initial = { data: { user: { displayName: "", email: "", photoURL: "" } }, height: window.innerHeight, month: new Date().getMonth() + 1, popup: {value: false, day: "", month: "", fromHours: "", fromMinutes: "", toHours: "", toMinutes: ""},  requests: [], accepts: [], error: "", focus: 1, loading: true};
+export type state = { data: { user: { displayName: string | null; email: string | null; photoURL: string | null } }; height: number; month: number; popup: {value: boolean, day: string, month: string, fromHours: string, fromMinutes: string, toHours: string, toMinutes: string}, requests: {day: string, fromHours: string, fromMinutes: string, month: string, toHours: string, toMinutes: string, value: boolean, id: string, user: string, photo: string}[], accepts: {day: string, fromHours: string, fromMinutes: string, month: string, toHours: string, toMinutes: string, value: boolean, id: string, user: string, photo: string}[], error: string, focus: number, loading: boolean};
 
 type logIn = {
   type: "sign";
@@ -18,8 +18,8 @@ type changeMonth = {
 type setPopup = {
   type: "set-popup";
   act: boolean
-  target: EventTarget & HTMLDivElement
-  month: string 
+  month: string,
+  day: string
 };
 type inputPopup = {
   type: "input-popup",

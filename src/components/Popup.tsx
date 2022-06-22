@@ -18,7 +18,7 @@ export const Popup = ({ state, dispatch, date }: { state: state; dispatch: React
       dispatch({ type: "direct-focus", id: state.focus + 1 });
     }
   }, [state.popup]);
-  
+
   return (
     <>
       <div className="p-2 text-2xl">
@@ -52,17 +52,20 @@ export const Popup = ({ state, dispatch, date }: { state: state; dispatch: React
             <button className="cursor-pointer text-center mx-2" onClick={() => dispatch({ type: "make-request" })}>
               request!
             </button>
-            <div className="cursor-pointer text-center mx-2" onClick={(e) => dispatch({ type: "set-popup", act: false, target: e.currentTarget, month: "" })}>
+            <div className="cursor-pointer text-center mx-2" onClick={(e) => dispatch({ type: "set-popup", act: false, day: "", month: "" })}>
               cancel!
             </div>
           </div>
         </form>
-        <div className="flex overflow-scroll">
+        <div className="flex overflow-x-scroll" id="bar">
           {state.accepts.map((item) => {
             if (item.day === state.popup.day && item.month === date) {
               return (
                 <div className="flex mt-2 mr-2" key={item.id}>
                   <p>{item.fromHours}</p>:<p>{item.fromMinutes}</p>-<p>{item.toHours}</p>:<p>{item.fromMinutes}</p>&nbsp;
+                  <div className="w-10">
+                    <img src={item.photo} alt="" className="rounded-full w-10" />
+                  </div>&nbsp;
                   <p className="whitespace-pre">{item.user}</p>
                 </div>
               );

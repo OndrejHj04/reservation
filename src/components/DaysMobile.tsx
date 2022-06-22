@@ -11,8 +11,9 @@ export const DaysMobile = ({ getDaysInMonth, weekDay, year, state, dispatch, dat
       <p className="text-center text-3xl">{year}</p>
       {[...Array(getDaysInMonth(year, state.month))].map((item, index) => {
         return (
-          <div key={index + 1}>
-            <div className="flex justify-between" onClick={(e) => dispatch({ type: "set-popup", act: true, target: e.currentTarget, month: date })}>
+          <div key={index + 1} onClick={(e) => dispatch({ type: "set-popup", act: true, month: date, day: (index+1).toString() })}>
+            
+            <div className="flex justify-between">
               <p>{index + 1}</p>
               <p>{days.indexOf(weekDay) + index > 6 ? arr[days.indexOf(weekDay) + index] : days[days.indexOf(weekDay) + index]}</p>
             </div>
@@ -28,5 +29,3 @@ export const DaysMobile = ({ getDaysInMonth, weekDay, year, state, dispatch, dat
     </>
   );
 };
-
-// 14, 21 22 23 24 28 29
