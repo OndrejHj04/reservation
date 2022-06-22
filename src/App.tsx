@@ -61,19 +61,16 @@ const reducer = (state: state, action: actions) => {
     case "make-request":
       const id = nanoid();
 
-      if (state.popup.fromHours.length && state.popup.fromMinutes.length && state.popup.toHours.length && state.popup.toMinutes.length) {
-        setDoc(doc(db, "requests", id), {
-          ...state.popup,
-          fromMinutes: state.popup.fromMinutes.length === 1 ? state.popup.fromMinutes + 0 : state.popup.fromMinutes,
-          toMinutes: state.popup.fromMinutes.length === 1 ? state.popup.toMinutes + 0 : state.popup.toMinutes,
-          id: id,
-          user: state.data.user.displayName,
-          photo: state.data.user.photoURL
-        });
-        return { ...state, popup: initial.popup, error: "" };
-      } else {
-        return { ...state, error: "Invalid data!" };
-      }
+      setDoc(doc(db, "requests", id), {
+        ...state.popup,
+        fromMinutes: state.popup.fromMinutes.length === 1 ? state.popup.fromMinutes + 0 : state.popup.fromMinutes,
+        toMinutes: state.popup.fromMinutes.length === 1 ? state.popup.toMinutes + 0 : state.popup.toMinutes,
+        id: id,
+        user: state.data.user.displayName,
+        photo: state.data.user.photoURL,
+      });
+      return { ...state, popup: initial.popup, error: "" };
+
     case "load-requests":
       return { ...state, requests: action.data };
     case "load-accepts":
@@ -91,29 +88,29 @@ const reducer = (state: state, action: actions) => {
         return { ...state, focus: countFocus() };
       }
       return state;
-      case "direct-focus":
-        return {...state, focus: Number(action.id)}
+    case "direct-focus":
+      return { ...state, focus: Number(action.id) };
   }
 };
 export const App = () => {
   const [state, dispatch] = useReducer(reducer, initial);
-  
+
   useEffect(() => {
     localStorage.getItem("user")?.length && dispatch({ type: "sign", data: JSON.parse(localStorage.getItem("user")!) });
     window.addEventListener("resize", () => dispatch({ type: "resize" }));
 
     onSnapshot(collection(db, "requests"), (snapshot) => {
-      let arr: { day: string; fromHours: string; fromMinutes: string; month: string; toHours: string; toMinutes: string; value: boolean; id: string, user: string, photo: string }[] = [];
+      let arr: { day: string; fromHours: string; fromMinutes: string; month: string; toHours: string; toMinutes: string; value: boolean; id: string; user: string; photo: string }[] = [];
       snapshot.docs.forEach((doc) => {
-        const data = doc.data() as { day: string; fromHours: string; fromMinutes: string; month: string; toHours: string; toMinutes: string; value: boolean; id: string, user: string, photo: string };
+        const data = doc.data() as { day: string; fromHours: string; fromMinutes: string; month: string; toHours: string; toMinutes: string; value: boolean; id: string; user: string; photo: string };
         arr.push(data);
       });
       dispatch({ type: "load-requests", data: arr });
     });
     onSnapshot(collection(db, "accepted"), (snapshot) => {
-      let arr: { day: string; fromHours: string; fromMinutes: string; month: string; toHours: string; toMinutes: string; value: boolean; id: string, user: string, photo: string }[] = [];
+      let arr: { day: string; fromHours: string; fromMinutes: string; month: string; toHours: string; toMinutes: string; value: boolean; id: string; user: string; photo: string }[] = [];
       snapshot.docs.forEach((doc) => {
-        const data = doc.data() as { day: string; fromHours: string; fromMinutes: string; month: string; toHours: string; toMinutes: string; value: boolean; id: string, user: string, photo: string };
+        const data = doc.data() as { day: string; fromHours: string; fromMinutes: string; month: string; toHours: string; toMinutes: string; value: boolean; id: string; user: string; photo: string };
         arr.push(data);
       });
       dispatch({ type: "load-accepts", data: arr });
@@ -126,18 +123,18 @@ export const App = () => {
       dispatch({ type: "modify-time" });
     }
   }, [state.popup]);
-    return (
-      <>
-        {Object.keys(state.data).length > 1 ? (
-          <>
-            <Navbar state={state} dispatch={dispatch} />
-            <Calendar dispatch={dispatch} state={state} />
-          </>
-        ) : (
-          <>
-            <SignIn dispatch={dispatch} state={state} />
-          </>
-        )}
-      </>
-    );
+  return (
+    <>
+      {Object.keys(state.data).length > 1 ? (
+        <>
+          <Navbar state={state} dispatch={dispatch} />
+          <Calendar dispatch={dispatch} state={state} />
+        </>
+      ) : (
+        <>
+          <SignIn dispatch={dispatch} state={state} />
+        </>
+      )}
+    </>
+  );
 };

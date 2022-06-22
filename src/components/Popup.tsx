@@ -48,6 +48,14 @@ export const Popup = ({ state, dispatch, date }: { state: state; dispatch: React
             <input type="number" name="toMinutes" id="4" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.toMinutes} onChange={(e) => dispatch({ type: "input-popup", event: e })} />
           </div>
 
+          <div className="flex">
+            <label htmlFor="">duration</label>
+            <span className=" input text-center outline-none border-b-2 border-black mx-1 overflow-hidden" style={{maxWidth: "100px", minWidth: "40px"}}>
+              {(Number(state.popup.toHours)-Number(state.popup.fromHours))*60+(Number(state.popup.toMinutes)-Number(state.popup.fromMinutes))}
+            </span>
+            <p>min</p>
+          </div>
+
           <div className="flex ml-auto">
             <button className="cursor-pointer text-center mx-2" onClick={() => dispatch({ type: "make-request" })}>
               request!
@@ -57,11 +65,11 @@ export const Popup = ({ state, dispatch, date }: { state: state; dispatch: React
             </div>
           </div>
         </form>
-        <div className="flex overflow-x-scroll" id="bar">
+        <div className="flex overflow-x-scroll " id="bar">
           {state.accepts.map((item) => {
             if (item.day === state.popup.day && item.month === date) {
               return (
-                <div className="flex mt-2 mr-2" key={item.id}>
+                <div className="flex mt-2 mr-2 mb-2" key={item.id}>
                   <p>{item.fromHours}</p>:<p>{item.fromMinutes}</p>-<p>{item.toHours}</p>:<p>{item.fromMinutes}</p>&nbsp;
                   <div className="w-10">
                     <img src={item.photo} alt="" className="rounded-full w-10" />
