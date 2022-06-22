@@ -11,17 +11,12 @@ export const DaysMobile = ({ getDaysInMonth, weekDay, year, state, dispatch, dat
       <p className="text-center text-3xl">{year}</p>
       {[...Array(getDaysInMonth(year, state.month))].map((item, index) => {
         return (
-          <div key={index + 1} onClick={(e) => dispatch({ type: "set-popup", act: true, month: date, day: (index+1).toString() })}>
+          <div key={index + 1}>
             
-            <div className="flex justify-between">
+            <div className="flex justify-between" onClick={()=>dispatch({type: "toggle-form", act: true, day: index+1, month: date})}>
               <p>{index + 1}</p>
               <p>{days.indexOf(weekDay) + index > 6 ? arr[days.indexOf(weekDay) + index] : days[days.indexOf(weekDay) + index]}</p>
             </div>
-            {state.accepts.map((item, i) => {
-              if (index + 1 === Number(item.day) && item.month === date) {
-                return <p key={item.id}>{item.text.fromHours}:{item.text.fromMinutes}-{item.text.toHours}:{item.text.toMinutes}</p>;
-              }
-            })}
             <hr />
           </div>
         );
