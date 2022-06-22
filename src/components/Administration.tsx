@@ -27,7 +27,7 @@ export const Administration = ({ state }: { state: state }) => {
                 <div className="bg-orange-500 p-2 rounded-2xl m-1 flex w-fit" key={item.id}>
                   <h1>{item.day}</h1>.&nbsp;
                   <h1>{item.month}</h1>&nbsp;
-                  <h1>{item.fromHours}</h1>:<h1>{item.fromMinutes}</h1>-<h1>{item.toHours}</h1>:<h1>{item.toMinutes}</h1>&nbsp;
+                  <h1>{item.text.fromHours}</h1>:<h1>{item.text.fromMinutes}</h1>-<h1>{item.text.toHours}</h1>:<h1>{item.text.toMinutes}</h1>&nbsp;
                   <div className="w-8 h-8" onClick={() => deleteDoc(doc(db, "requests", item.id))}>
                     <img src={require("../images/cancel.png")} alt="" className="w-full h-full" />
                   </div>

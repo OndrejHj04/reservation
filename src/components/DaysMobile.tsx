@@ -19,7 +19,7 @@ export const DaysMobile = ({ getDaysInMonth, weekDay, year, state, dispatch, dat
             </div>
             {state.accepts.map((item, i) => {
               if (index + 1 === Number(item.day) && item.month === date) {
-                return <p key={item.id}>{item.fromHours}:{item.fromMinutes}-{item.toHours}:{item.toMinutes}</p>;
+                return <p key={item.id}>{item.text.fromHours}:{item.text.fromMinutes}-{item.text.toHours}:{item.text.toMinutes}</p>;
               }
             })}
             <hr />

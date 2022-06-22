@@ -14,7 +14,7 @@ export const Popup = ({ state, dispatch, date }: { state: state; dispatch: React
   }, [state.focus, state.popup]);
 
   useEffect(() => {
-    if ((state.popup.fromHours.length > 1 && state.focus === 1) || (state.popup.fromMinutes.length > 1 && state.focus === 2) || (state.popup.toHours.length > 1 && state.focus === 3)) {
+    if ((state.popup.text.fromHours.length > 1 && state.focus === 1) || (state.popup.text.fromMinutes.length > 1 && state.focus === 2) || (state.popup.text.toHours.length > 1 && state.focus === 3)) {
       dispatch({ type: "direct-focus", id: state.focus + 1 });
     }
   }, [state.popup]);
@@ -38,20 +38,20 @@ export const Popup = ({ state, dispatch, date }: { state: state; dispatch: React
 
           <div className="flex">
             <label htmlFor="">from</label>
-            <input type="number" name="fromHours" id="1" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.fromHours} onChange={(e) => dispatch({ type: "input-popup", event: e })} />:
-            <input type="number" name="fromMinutes" id="2" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.fromMinutes} onChange={(e) => dispatch({ type: "input-popup", event: e })} />
+            <input type="number" name="fromHours" id="1" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.text.fromHours} onChange={(e) => dispatch({ type: "input-popup", event: e })} />:
+            <input type="number" name="fromMinutes" id="2" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.text.fromMinutes} onChange={(e) => dispatch({ type: "input-popup", event: e })} />
           </div>
 
           <div className="flex">
             <label htmlFor="">to</label>
-            <input type="number" name="toHours" id="3" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.toHours} onChange={(e) => dispatch({ type: "input-popup", event: e })} />:
-            <input type="number" name="toMinutes" id="4" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.toMinutes} onChange={(e) => dispatch({ type: "input-popup", event: e })} />
+            <input type="number" name="toHours" id="3" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.text.toHours} onChange={(e) => dispatch({ type: "input-popup", event: e })} />:
+            <input type="number" name="toMinutes" id="4" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.popup.text.toMinutes} onChange={(e) => dispatch({ type: "input-popup", event: e })} />
           </div>
 
           <div className="flex">
             <label htmlFor="">duration</label>
             <span className=" input text-center outline-none border-b-2 border-black mx-1 overflow-hidden" style={{maxWidth: "100px", minWidth: "40px"}}>
-              {(Number(state.popup.toHours)-Number(state.popup.fromHours))*60+(Number(state.popup.toMinutes)-Number(state.popup.fromMinutes))}
+              {state.popup.duration}
             </span>
             <p>min</p>
           </div>
@@ -70,7 +70,7 @@ export const Popup = ({ state, dispatch, date }: { state: state; dispatch: React
             if (item.day === state.popup.day && item.month === date) {
               return (
                 <div className="flex mt-2 mr-2 mb-2" key={item.id}>
-                  <p>{item.fromHours}</p>:<p>{item.fromMinutes}</p>-<p>{item.toHours}</p>:<p>{item.fromMinutes}</p>&nbsp;
+                  <p>{item.text.fromHours}</p>:<p>{item.text.fromMinutes}</p>-<p>{item.text.toHours}</p>:<p>{item.text.fromMinutes}</p>&nbsp;
                   <div className="w-10">
                     <img src={item.photo} alt="" className="rounded-full w-10" />
                   </div>&nbsp;

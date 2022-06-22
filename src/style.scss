@@ -1,23 +1,26 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-:not(#bar)::-webkit-scrollbar{
+::-webkit-scrollbar {
   display: none;
 }
-::-webkit-scrollbar{
-  background-color: gray;
-  border-radius: 100px;
-  padding: 1px;
-}
+// :not(#bar)::-webkit-scrollbar{
+//   display: none;
+// }
+// ::-webkit-scrollbar{
+//   background-color: gray;
+//   border-radius: 100px;
+//   padding: 1px;
+// }
 
-::-webkit-scrollbar-thumb {
-  border-radius: 100px;
-  background-color: white;
-  box-shadow: inset 0 0 6px     rgba(0,0,0,0.5); 
-}
+// ::-webkit-scrollbar-thumb {
+//   border-radius: 100px;
+//   background-color: white;
+//   box-shadow: inset 0 0 6px     rgba(0,0,0,0.5);
+// }

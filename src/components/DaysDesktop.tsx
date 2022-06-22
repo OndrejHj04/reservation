@@ -19,7 +19,7 @@ export const DaysDesktop = ({ weekDay, getDaysInMonth, year, state, dispatch, da
           <div>
             {state.accepts.map((item) => {
               if (item.month === date && Number(item.day) === 1) {
-                return <p key={nanoid()}>{item.month}</p>;
+                return <p key={nanoid()}>{item.text.fromHours}:{item.text.fromMinutes}-{item.text.toHours}:{item.text.toMinutes}</p>;
               }
             })}
           </div>
@@ -34,7 +34,7 @@ export const DaysDesktop = ({ weekDay, getDaysInMonth, year, state, dispatch, da
                     return (
                       <div key={nanoid()} className="flex flex-col rounded-xl">
                         <div className="flex">
-                          <p>{item.fromHours}</p>:<p>{item.fromMinutes}</p>-<p>{item.toHours}</p>:<p>{item.toMinutes}</p>
+                          <p>{item.text.fromHours}</p>:<p>{item.text.fromMinutes}</p>-<p>{item.text.toHours}</p>:<p>{item.text.toMinutes}</p>
                         </div>
                       </div>
                     );

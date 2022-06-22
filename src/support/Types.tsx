@@ -1,5 +1,6 @@
-export const initial = { data: { user: { displayName: "", email: "", photoURL: "" } }, height: window.innerHeight, month: new Date().getMonth() + 1, popup: {value: false, day: "", month: "", fromHours: "", fromMinutes: "", toHours: "", toMinutes: ""},  requests: [], accepts: [], error: "", focus: 1, loading: true};
-export type state = { data: { user: { displayName: string | null; email: string | null; photoURL: string | null } }; height: number; month: number; popup: {value: boolean, day: string, month: string, fromHours: string, fromMinutes: string, toHours: string, toMinutes: string}, requests: {day: string, fromHours: string, fromMinutes: string, month: string, toHours: string, toMinutes: string, value: boolean, id: string, user: string, photo: string}[], accepts: {day: string, fromHours: string, fromMinutes: string, month: string, toHours: string, toMinutes: string, value: boolean, id: string, user: string, photo: string}[], error: string, focus: number, loading: boolean};
+export const initial = { data: { user: { displayName: "", email: "", photoURL: "" } }, height: window.innerHeight, month: new Date().getMonth() + 1, popup: { text:{fromHours: "", fromMinutes: "", toHours: "", toMinutes: ""}, day: "", month: "", value: false, duration: 0},  requests: [], accepts: [], error: "", focus: 1, loading: true};
+export type state = { data: { user: { displayName: string | null; email: string | null; photoURL: string | null } }; height: number; month: number; popup: {text: {fromHours: string, fromMinutes: string, toHours: string, toMinutes: string}, duration: number, value: boolean, day: string, month: string}, requests: {day: string, month: string, text: {fromHours: string, fromMinutes: string, toHours: string, toMinutes: string}, value: boolean, id: string, user: string, photo: string}[], accepts: {day: string,  month: string, text: {fromHours: string, fromMinutes: string, toHours: string, toMinutes: string}, value: boolean, id: string, user: string, photo: string}[], error: string, focus: number, loading: boolean};
+
 
 type logIn = {
   type: "sign";
@@ -25,19 +26,16 @@ type inputPopup = {
   type: "input-popup",
   event: React.ChangeEvent<HTMLInputElement>,
 }
-type modifyTime = {
-  type: "modify-time"
-}
 type makeRequest = {
   type: "make-request"
 }
 type loadRequests = {
   type: "load-requests",
-  data: {day: string, fromHours: string, fromMinutes: string, month: string, toHours: string, toMinutes: string, value: boolean, id: string, user: string, photo: string}[]
+  data: { day: string; text: {fromHours: string; fromMinutes: string; toHours: string; toMinutes: string;}, month: string; value: boolean; id: string; user: string; photo: string }[]
 }
-type loadAccepts = {
+type loadAccepts = { 
   type: "load-accepts",
-  data: {day: string; fromHours: string; fromMinutes: string; month: string; toHours: string; toMinutes: string; value: boolean; id: string, user: string, photo: string}[]
+  data: { day: string; text: {fromHours: string; fromMinutes: string; toHours: string; toMinutes: string;}, month: string; value: boolean; id: string; user: string; photo: string }[]
 }
 type focus = {
   type: "focus"
@@ -47,5 +45,8 @@ type directFocus = {
   type: "direct-focus",
   id: number
 }
-export type actions = logIn | logOut | resize | changeMonth | setPopup   | inputPopup | modifyTime | makeRequest | loadRequests | loadAccepts | focus | directFocus;
+type duration = {
+  type: "duration"
+}
+export type actions = logIn | logOut | resize | changeMonth | setPopup   | inputPopup  | makeRequest | loadRequests | loadAccepts | focus | directFocus | duration;
 export const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
