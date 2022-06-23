@@ -9,9 +9,7 @@ import { Load } from "./components/Load";
 
 const db = getFirestore();
 
-const dateCheck = () => {
-
-};
+const dateCheck = () => {};
 const reducer = (state: state, action: actions) => {
   switch (action.type) {
     case "sign":
@@ -43,26 +41,30 @@ const reducer = (state: state, action: actions) => {
         month: val,
       };
     case "toggle-form":
-      return { ...state, form: { ...state.form, value: action.act, day: action.day, month: action.month } };
+      return { ...state, form: { ...state.form, value: action.act, day: action.day, month: action.month, text: initial.form.text }, focus: action.act?1:0 };
     case "input-change":
       return { ...state, form: { ...state.form, text: { ...state.form.text, [action.name]: action.value } } };
     case "focus":
-      const event = action.event.target as Element
-
-      return {...state, focus: Number(event.id)}
+      return {...state, focus: Number(action.id)}
   }
 };
 export const App = () => {
   const [state, dispatch] = useReducer(reducer, initial);
+
   useEffect(() => {
     localStorage.getItem("user")?.length && dispatch({ type: "sign", data: JSON.parse(localStorage.getItem("user")!) });
     window.addEventListener("resize", () => dispatch({ type: "resize" }));
   }, []);
 
-  document.getElementById(state.focus.toString())?.focus()
+  console.log(state.focus)
 
-
- console.log('xd') 
+  useEffect(()=>{
+    document.getElementById(state.focus.toString())?.focus()
+  },[state.focus, state.form])
+  
+  useEffect(()=>{
+    state.form.value&&window.addEventListener("click", ()=>document.getElementById(state.focus.toString())?.focus())
+  },[state.form.value, state.focus])
   return (
     <>
       {Object.keys(state.data).length > 1 ? (

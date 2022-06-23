@@ -4,7 +4,7 @@ type typeForm = { value: boolean; day: number; month: string; text: { fromHours:
 const initialUser = { displayName: "", email: "", photoURL: "" };
 type typeUser = { displayName: string | null; email: string | null; photoURL: string | null };
 
-export const initial = { data: { user: initialUser }, height: window.innerHeight, month: new Date().getMonth() + 1, form: initialForm, focus: 1 };
+export const initial = { data: { user: initialUser }, height: window.innerHeight, month: new Date().getMonth() + 1, form: initialForm, focus: 0};
 export type state = { data: { user: typeUser }; height: number; month: number; form: typeForm, focus: number };
 
 type logIn = {
@@ -29,13 +29,13 @@ type toggleForm = {
 };
 type inputChange = {
   type: "input-change";
-  name: string;
+  name: "fromHours" | "fromMinutes" | "toHours" | "toMinutes";
   value: string;
   event: React.ChangeEvent<HTMLInputElement>
 };
-type focus = {
-  type: "focus",
-  event: React.MouseEvent<HTMLInputElement, MouseEvent>
+type  focus = {
+  type: "focus"
+  id: string
 }
 export type actions = logIn | logOut | resize | changeMonth | toggleForm | inputChange | focus;
 export const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
