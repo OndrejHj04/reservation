@@ -32,7 +32,7 @@ export const Popup = ({ state, dispatch, date }: { state: state; dispatch: React
           <div className="flex">
             <label htmlFor="">duration</label>
             <span className="text-center outline-none border-b-2 border-black mx-1 overflow-hidden" style={{maxWidth: "100px", minWidth: "40px"}}>
-
+            {state.form.duration}
             </span>
             <p>min</p>
           </div>

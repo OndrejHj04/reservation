@@ -1,5 +1,5 @@
-const initialForm = { value: false, day: 0, month: "", text: { fromHours: "", fromMinutes: "", toHours: "", toMinutes: "" } };
-type typeForm = { value: boolean; day: number; month: string; text: { fromHours: string; fromMinutes: string; toHours: string; toMinutes: string } };
+const initialForm = { value: false, day: 0, month: "", text: { fromHours: "", fromMinutes: "", toHours: "", toMinutes: "" }, duration: "" };
+type typeForm = { value: boolean; day: number; month: string; text: { fromHours: string; fromMinutes: string; toHours: string; toMinutes: string }, duration: string };
 
 const initialUser = { displayName: "", email: "", photoURL: "" };
 type typeUser = { displayName: string | null; email: string | null; photoURL: string | null };

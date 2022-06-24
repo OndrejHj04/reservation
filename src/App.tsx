@@ -61,7 +61,10 @@ const reducer = (state: state, action: actions) => {
       const test = (Object.keys(state.form.text) as ["fromHours", "fromMinutes", "toHours", "toMinutes"]).map((item) => {
         return state.form.text[item] === "";
       });
-      return { ...state, focus: test.indexOf(true) + 1, form: { ...state.form, text: { ...state.form.text, [action.item]: validate(action.item, Number(state.form.text[action.item])) } } };
+
+      
+      const duration = ((Number(state.form.text.toHours) - Number(state.form.text.fromHours))*60)+(Number(state.form.text.toMinutes)-Number(state.form.text.fromMinutes))
+      return { ...state, focus: test.indexOf(true) + 1, form: { ...state.form, text: { ...state.form.text, [action.item]: validate(action.item, Number(state.form.text[action.item])) }, duration: test.indexOf(true)<1 ?duration.toString():""} };
   }
 };
 export const App = () => {
@@ -89,7 +92,8 @@ export const App = () => {
       state.focus !== index + 1 && state.form.text[item].length && dispatch({ type: "number-focus", item: item });
     }, [state.form.text, state.focus]);
   });
-  console.log('xd')
+
+
   return (
     <>
       {Object.keys(state.data).length > 1 ? (
