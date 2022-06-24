@@ -35,7 +35,11 @@ type inputChange = {
 };
 type  focus = {
   type: "focus"
-  id: string
+  e: React.MouseEvent<HTMLInputElement, MouseEvent>
 }
-export type actions = logIn | logOut | resize | changeMonth | toggleForm | inputChange | focus;
+type numberFocus = {
+  type: "number-focus",
+  item: "fromHours" | "fromMinutes" | "toHours" | "toMinutes";
+}
+export type actions = logIn | logOut | resize | changeMonth | toggleForm | inputChange | focus | numberFocus;
 export const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];

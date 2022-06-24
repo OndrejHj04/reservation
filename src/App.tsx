@@ -3,13 +3,23 @@ import { createContext, useEffect, useReducer, useRef } from "react";
 import { initial, state, actions } from "./support/Types";
 import { SignIn } from "./components/SignIn";
 import { Calendar } from "./components/Calendar";
-import { doc, setDoc, getFirestore, onSnapshot, collection, snapshotEqual } from "firebase/firestore";
-import { nanoid } from "nanoid";
-import { Load } from "./components/Load";
 
-const db = getFirestore();
+const validate = (item: "fromHours" | "fromMinutes" | "toHours" | "toMinutes", value: number) => {
+  if (item.includes("Hours") && value > 20) {
+    return "20";
+  }
 
-const dateCheck = () => {};
+  if (item.includes("Hours") && value < 8) {
+    return "8";
+  }
+
+  if (item.includes("Minutes") && (value > 59 || value < 0)) {
+    return "00";
+  }
+
+  return value;
+};
+
 const reducer = (state: state, action: actions) => {
   switch (action.type) {
     case "sign":
@@ -41,11 +51,17 @@ const reducer = (state: state, action: actions) => {
         month: val,
       };
     case "toggle-form":
-      return { ...state, form: { ...state.form, value: action.act, day: action.day, month: action.month, text: initial.form.text }, focus: action.act?1:0 };
+      return { ...state, form: { ...state.form, value: action.act, day: action.day, month: action.month, text: initial.form.text }, focus: action.act ? 1 : 0 };
     case "input-change":
       return { ...state, form: { ...state.form, text: { ...state.form.text, [action.name]: action.value } } };
     case "focus":
-      return {...state, focus: Number(action.id)}
+      const e = action.e.target as Element;
+      return { ...state, focus: Number(e.id) };
+    case "number-focus":
+      const test = (Object.keys(state.form.text) as ["fromHours", "fromMinutes", "toHours", "toMinutes"]).map((item) => {
+        return state.form.text[item] === "";
+      });
+      return { ...state, focus: test.indexOf(true) + 1, form: { ...state.form, text: { ...state.form.text, [action.item]: validate(action.item, Number(state.form.text[action.item])) } } };
   }
 };
 export const App = () => {
@@ -56,15 +72,24 @@ export const App = () => {
     window.addEventListener("resize", () => dispatch({ type: "resize" }));
   }, []);
 
-  console.log(state.focus)
+  useEffect(() => {
+    document.getElementById(state.focus.toString())?.focus();
+  }, [state.focus, state.form]);
 
-  useEffect(()=>{
-    document.getElementById(state.focus.toString())?.focus()
-  },[state.focus, state.form])
-  
-  useEffect(()=>{
-    state.form.value&&window.addEventListener("click", ()=>document.getElementById(state.focus.toString())?.focus())
-  },[state.form.value, state.focus])
+  useEffect(() => {
+    state.form.value && window.addEventListener("click", () => document.getElementById(state.focus.toString())?.focus());
+  }, [state.form.value, state.focus]);
+
+  (Object.keys(state.form.text) as ["fromHours", "fromMinutes", "toHours", "toMinutes"]).map((item, index) => {
+    useEffect(() => {
+      state.form.text[item].length > 1 && dispatch({ type: "number-focus", item: item });
+    }, [state.form.text[item].length]);
+
+    useEffect(() => {
+      state.focus !== index + 1 && state.form.text[item].length && dispatch({ type: "number-focus", item: item });
+    }, [state.form.text, state.focus]);
+  });
+  console.log('xd')
   return (
     <>
       {Object.keys(state.data).length > 1 ? (

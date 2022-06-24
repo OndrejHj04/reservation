@@ -14,7 +14,7 @@ export const DaysDesktop = ({ weekDay, getDaysInMonth, year, state, dispatch, da
       </div>
 
       <div className="grid grid-cols-7 aspect-square grid-rows-5">
-        <div style={{ gridColumnStart: days.indexOf(weekDay) + 1 }}>
+        <div style={{ gridColumnStart: days.indexOf(weekDay) + 1 }} onClick={()=>dispatch({type: "toggle-form", act: true, day: 1, month: date})}>
           <p className="w-fit bg-slate-300 border border-black py-0.5 px-1.5 rounded-full">1</p>
           <div>
 

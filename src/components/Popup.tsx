@@ -2,12 +2,6 @@ import { actions, state } from "../support/Types";
 
 export const Popup = ({ state, dispatch, date }: { state: state; dispatch: React.Dispatch<actions>; date: string }) => {
 
-  const change = (e:React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-    const target = e.target as HTMLElement
-    target.blur()
-    dispatch({type: "focus", id: target.id})
-  }
-
   return (
     <>
       <div className="p-2 text-2xl">
@@ -27,12 +21,12 @@ export const Popup = ({ state, dispatch, date }: { state: state; dispatch: React
 
           <div className="flex">
             <label htmlFor="">from</label>
-            <input type="number" onClick={e=>change(e)} name="fromHours" id="1" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.form.text.fromHours} onChange={e=>dispatch({type: "input-change", name: "fromHours", value: e.target.value, event: e})}/>:
-            <input type="number" onClick={e=>change(e)} name="fromMinutes" id="2" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.form.text.fromMinutes} onChange={e=>dispatch({type: "input-change", name: "fromMinutes", value: e.target.value, event: e})}/>
+            <input type="number" onClick={e=>dispatch({type: "focus", e: e})} name="fromHours" id="1" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.form.text.fromHours} onChange={e=>dispatch({type: "input-change", name: "fromHours", value: e.target.value, event: e})}/>:
+            <input type="number" onClick={e=>dispatch({type: "focus", e: e})} name="fromMinutes" id="2" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.form.text.fromMinutes} onChange={e=>dispatch({type: "input-change", name: "fromMinutes", value: e.target.value, event: e})}/>
 
             <label htmlFor="">to</label>
-            <input type="number" onClick={e=>change(e)} name="toHours" id="3" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.form.text.toHours} onChange={e=>dispatch({type: "input-change", name: "toHours", value: e.target.value, event: e})}/>:
-            <input type="number" onClick={e=>change(e)} name="toMinutes" id="4" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.form.text.toMinutes} onChange={e=>dispatch({type: "input-change", name: "toMinutes", value: e.target.value, event: e})}/>
+            <input type="number" onClick={e=>dispatch({type: "focus", e: e})} name="toHours" id="3" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.form.text.toHours} onChange={e=>dispatch({type: "input-change", name: "toHours", value: e.target.value, event: e})}/>:
+            <input type="number" onClick={e=>dispatch({type: "focus", e: e})} name="toMinutes" id="4" className=" input text-center outline-none border-b-2 border-black w-8 mx-1" value={state.form.text.toMinutes} onChange={e=>dispatch({type: "input-change", name: "toMinutes", value: e.target.value, event: e})}/>
           </div>
 
           <div className="flex">
